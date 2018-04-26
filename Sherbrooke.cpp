@@ -148,17 +148,18 @@ int side(){
 printf("Poulet Side\n"); // Side Ident
 bigul5[9] = working;
 onbigul5 = 1;
-write;
+write();
 onbigul5 = 0;
 printf("Is the light at unique adress?\n");
 kbin();
+
 std::string no = ("n");
 if (name == no){
 bigul1[9] = 600;
 bigul2[9] = 600;
 onbigul1 = 1;
 onbigul2 = 1;
-write;
+write();
 onbigul1 = 0;
 onbigul2 = 0;
 }
@@ -182,13 +183,14 @@ int cycle(){
 printf("Poulet Cycle\n");
 for (int i = 500; i<516; i++) {
 	//set working adress to 500
-	working = i;
-	bigul5[9] = working;
+	adress = i;
+	bigul5[9] = adress; //Bigul5 identify
 	side();
 	printf("Input new DMX adress");
 	kbin();
 	bigul1[7] = atoi(name);
 	bigul2[7] = atoi(name);
+		printf("read bigul 1 = %d \n", bigul1[7]);
 	onbigul1 = 1;
 	onbigul2 = 1;
 	write(); // to working new address
