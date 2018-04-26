@@ -43,13 +43,22 @@ char bigul3[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x10, 0x02, 0x01, 0x01, 0xff,
 char bigul4[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x04, 0x02, 0x01, 0x01, 0xff, 0x4c, 0x55, 0x4d};
 // Set Identify  ////// Verrified
 char bigul5[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x0e, 0x02, 0x01, 0x01, 0xff, 0x4c, 0x55, 0x4d};
-// Set Random  // pas bon encore
+// Set Random  // commande 13 Verrified
 char bigul6[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x13, 0x02, 0x01, 0x03, 0xff, 0x4c, 0x55, 0x4d};
-
-
+int onbigul1 = 0;
+int onbigul2 = 0; 
+int onbigul3 = 0;
+int onbigul4 = 0;
+int onbigul5 = 0;
+int onbigul6 = 0;
+int working = 1;
 char name[14];
 char command[14];
 int stringLength;
+
+int sendsix();
+int sendident();
+ 
 
 int kbin(){ // Keyboard Input
 
@@ -75,7 +84,7 @@ printf("Overide	: Set light overide on ALL channels\n");
 int write(){
 	 serialib LS;  // Object of the serialib class
     int Ret;      // Used for return values
-
+	
     char Buffer[256];
     int Buffed[128];
 
@@ -89,11 +98,24 @@ int write(){
     printf ("Serial port opened successfully !\n");
     // Write Lidlum command on the serial port
 
+    if (onbigul1 == 1){
     Ret=LS.Write (bigul1, 14);
+    }
+    if (onbigul2 == 1){
     Ret=LS.Write (bigul2, 14);
+    }
+    if (onbigul3 == 1){
     Ret=LS.Write (bigul3, 14);
+    }
+    if (onbigul4 == 1){
     Ret=LS.Write (bigul4, 14);
-    Ret=LS.Write (bigul5, 14);                
+    }
+    if (onbigul5 == 1){
+    Ret=LS.Write (bigul5, 14);
+    }
+    if (onbigul6 == 1){
+    Ret=LS.Write (bigul6, 14);
+    }            
     if (Ret!=1) {                             
         printf ("Error while writing data\n");
         return Ret;                           
@@ -103,15 +125,16 @@ int write(){
     // Close the connection with the device
     LS.Close();
 }
+int sendident(){}
 int rand(){
 printf("Poulet Rand\n");
 }
 int set(){
 printf("Poulet Set\n");
-bigul1[9] = adress;
-bigul2[9] = adress;
-bigulX[9] = adress;
-bigul6[9] = adress;
+bigul1[9] = adress; //Set Device Adress
+bigul2[9] = adress; //Set DMX Adress
+//bigulX[9] = adress;
+//bigul6[9] = adress; //pas mettre la
 //no write yet
 
 printf("The New working adress is %d \n", bigul1[9]);
@@ -123,12 +146,27 @@ sendident(); //existe pas encore
 }
 int side(){
 printf("Poulet Side\n"); // Side Ident
-//sendident();
+bigul5[9] = working;
+onbigul5 = 1;
+write;
+onbigul5 = 0;
 printf("Is the light at unique adress?\n");
 kbin();
-if (name == 'n'){
-sendsix(); // existe pas encore, met le working a 600
-}}
+std::string no = ("n");
+if (name == no){
+bigul1[9] = 600;
+bigul2[9] = 600;
+onbigul1 = 1;
+onbigul2 = 1;
+write;
+onbigul1 = 0;
+onbigul2 = 0;
+}
+}
+
+int sendsix(){
+//prends le working adress et le met a 600
+}
 
 int bank(){
 printf("Poulet Bank\n");
@@ -142,14 +180,20 @@ printf("Poulet Rbank\n");
 }
 int cycle(){
 printf("Poulet Cycle\n");
-for (i = 0, i<15, i++) {
+for (int i = 500; i<516; i++) {
 	//set working adress to 500
-	setident();//identify
+	working = i;
+	bigul5[9] = working;
 	side();
-	printf("Input new DMX adress);
+	printf("Input new DMX adress");
 	kbin();
-	bigulX[x] = //name
-	//write  to working new address
+	bigul1[7] = atoi(name);
+	bigul2[7] = atoi(name);
+	onbigul1 = 1;
+	onbigul2 = 1;
+	write(); // to working new address
+	onbigul1 = 0;
+	onbigul1 = 0;
 	}
 }
 int dmx(){
