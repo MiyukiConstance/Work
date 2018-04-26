@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include "serialib.h"
 #include <ctype.h>
-#include <limits>  //   //?
+//#include <limits>  //   //?
 #include <stdio_ext.h>
 #include <iostream>
 #include <fstream>
@@ -24,16 +24,22 @@
 // faire menage dans les includes a la fin
 #include <prussdrv.h>
 #include <pruss_intc_mapping.h>
+
+
+
 #define PRU_NUM 0 	// Using PRU 0
 
 #define         DEVICE_PORT             "/dev/ttyO2"  
 
 
-int adress =1;
+int adress = 1;
+int adress1 = 0;
+int wAdress = 0; // working adresss
 int setAdress;
 /////////////////////PAS BON IL Y A DEUX OVERIDE!!!!!!!!!!///////
 /////////// MODIFIER LE RESTE DU PROGRAMME /////////////// DEMAIN
 // Set dev adress ////// Verrified
+//char
 char bigul1[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x03, 0x02, 0x01, 0x03, 0xff, 0x4c, 0x55, 0x4d};
 // Set DMX adress  ///// ?
 char bigul2[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x11, 0x02, 0x01, 0x03, 0xff, 0x4c, 0x55, 0x4d};
@@ -69,7 +75,6 @@ int kbin(){ // Keyboard Input
 }
 int subMain(){
 
-printf("Working Adress = %d \n", adress);
 printf("\nList of available commands:\n\n");
 printf("Rand	: Perform Random on working adress\n");
 printf("Set	: Set the new Working Adress\n");
@@ -129,61 +134,92 @@ int sendident(){}
 int rand(){
 printf("Poulet Rand\n");
 }
+
+
 int set(){
-printf("Poulet Set\n");
-bigul1[9] = adress; //Set Device Adress
-bigul2[9] = adress; //Set DMX Adress
-//bigulX[9] = adress;
-//bigul6[9] = adress; //pas mettre la
-//no write yet
+	if (wAdress >= 255){
+	adress1 = wAdress - 255;
+	adress = 255;
+	}
+	else {
+	adress1 = 0;
+	adress = wAdress;
+	}
+//printf("The new working adress is %d \n\n", adress + adress1); 
+}
 
-printf("The New working adress is %d \n", bigul1[9]);
+aSet(){
+	// le but c'est de ecrire a l'adress quon etais rendu la nouvekle val
+
+	//bigul1[8] = adress; //Set Device Adress
+	//bigul1[9] = adress1; 
+	//bigul2[8] = adress; //Set DMX Adress
+	//bigul2[9] = adress1;
+	//onbigul1 = 1;
+	//onbigul2 = 1;
+	//write();
+	//onbigul1 = 0;
+	//onbigul2 = 0;
+	// working adress should be fine from side
+	
 
 }
+
 int identify(){
-printf("Poulet Identify\n");
-sendident(); //existe pas encore
-}
-int side(){
-printf("Poulet Side\n"); // Side Ident
-bigul5[9] = working;
+//printf("Poulet Identify\n");
+bigul5[4] = adress;
+bigul5[5] = adress1;
 onbigul5 = 1;
 write();
 onbigul5 = 0;
-printf("Is the light at unique adress?\n");
-kbin();
+}
 
+int side(){
+printf("\nIs the light at unique adress?\n");
+kbin();
 std::string no = ("n");
 if (name == no){
-bigul1[9] = 600;
-bigul2[9] = 600;
-	printf("bigul19 %d\n", bigul1[9]);
-onbigul1 = 1;
-onbigul2 = 1;
-write();
-onbigul1 = 0;
-onbigul2 = 0;
+bank();
+
 }
-	else {printf("Input new DMX adress");
+	else {printf("\nInput new DMX adress\n");
 	kbin();
-	bigul1[7] = atoi(name);
-	bigul2[7] = atoi(name);
-		printf("read bigul 1 = %d \n", bigul1[7]);
-	onbigul1 = 1;
-	onbigul2 = 1;
-	write(); // to working new address
-	onbigul1 = 0;
-	onbigul1 = 0;
+//bkpaddr
+// a ce point le working adress est set par cycle
+	// non   wAdress = atoi(name);
+	// non   set();  //pour diviser la nouvelle input
+	//nouvelle fonction?
+	//peut etre 
+	aSet(); // donc dans aset on a la nouvlle valeur et celle quon est 
+		//rendu
+
+	// remplacer par aSet
+
+	//onbigul1 = 1;
+	//onbigul2 = 1;
+	//write(); // to working new address
+	//onbigul1 = 0;
+	//onbigul1 = 0;
 	     }
 }
 
-int sendsix(){
-//prends le working adress et le met a 600
-}
+
 
 int bank(){
-printf("Poulet Bank\n");
-sendsix();// send working adress to 600
+//printf("Poulet Bank\n");
+//sendsix();// send working adress to 600
+// on parle a wA qui est en pricipe 500 ++ ou autre
+// et on veut setter a xxxxxx 
+bigul1[4] = adress;
+bigul1[5] = adress1;
+wAdress = 600;
+set();
+bigul1[8] = adress;
+bigul1[9] = adress1; // peut etre [] pas bon....
+onbigul1 = 1;
+write();
+onbigul1 = 0;
+write();
 }
 int rbank(){
 printf("Poulet Rbank\n");
@@ -192,14 +228,13 @@ printf("Poulet Rbank\n");
 // remet working a ce quelle etait
 }
 int cycle(){
-printf("Poulet Cycle\n");
-for (int i = 500; i<516; i++) {
-	printf("Now testing Adress %d\n", i);
-	//set working adress to 500
-	adress = i;
-	bigul5[9] = adress; //Bigul5 identify
+	for (int i = 0; i<16; i++) {
+	printf("Now testing Adress %d\n\n", i);
+	wAdress = i + 500;
+//	bkpAddr = wAdress;
+	set(); // divise l'adresse
+	identify();
 	side();
-	
 	}
 }
 int dmx(){
@@ -224,10 +259,10 @@ exit(EXIT_FAILURE);
 printf("\n");
 printf("Set workig adress, 0 = all\n");
 kbin();
-adress = atoi(name);
+wAdress = atoi(name);
+set();
 subMain();  // Options
 
-set();	
 
 
 std::string random = ("Rand");
