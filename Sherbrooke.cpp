@@ -31,26 +31,23 @@
 
 int adress =1;
 int setAdress;
-
+/////////////////////PAS BON IL Y A DEUX OVERIDE!!!!!!!!!!///////
+/////////// MODIFIER LE RESTE DU PROGRAMME /////////////// DEMAIN
 // Set dev adress
-char bigul1[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x03, 0x02, 0x00, 0x03, 0xff, 0x4c, 0x55, 0x4d};
+char bigul1[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x03, 0x02, 0x01, 0x03, 0xff, 0x4c, 0x55, 0x4d};
 // Set DMX adress
-char bigul2[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x11, 0x02, 0x00, 0x03, 0xff, 0x4c, 0x55, 0x4d};
+char bigul2[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x11, 0x02, 0x01, 0x03, 0xff, 0x4c, 0x55, 0x4d};
 // Set Overide
-char bigul3[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x10, 0x02, 0x00, 0x01, 0xff, 0x4c, 0x55, 0x4d};
+char bigul3[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x10, 0x02, 0x01, 0x01, 0xff, 0x4c, 0x55, 0x4d};
 // Set Light Overide
-char bigul4[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x04, 0x02, 0x00, 0x01, 0xff, 0x4c, 0x55, 0x4d};
+char bigul4[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x04, 0x02, 0x01, 0x01, 0xff, 0x4c, 0x55, 0x4d};
 // Set DMX Enable
-char bigul5[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x0e, 0x02, 0x00, 0x01, 0xff, 0x4c, 0x55, 0x4d};
-// Set Random
-char bigul6[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x03, 0x02, 0x00, 0x03, 0xff, 0x4c, 0x55, 0x4d};
+char bigul5[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x0e, 0x02, 0x01, 0x01, 0xff, 0x4c, 0x55, 0x4d};
+// Set Random  // pas bon encore
+char bigul6[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x03, 0x02, 0x01, 0x03, 0xff, 0x4c, 0x55, 0x4d};
 
 
 char name[14];
-//char usrName[14];
-//char supName[14];
-//char supPass[14];
-//char usrPass[14];
 char command[14];
 int stringLength;
 
@@ -61,12 +58,8 @@ int kbin(){ // Keyboard Input
 	__fpurge(stdin);
 	return 1;
 }
-int subMain();{
+int subMain(){
 
-//int stringLength = strlen(name);
-//for (int i = 0; i < stringLength; i++) {
-//usrName[i] = name[i];
-//testOut[1] = usrName;  // teporaire log genre ostie de chien sale
 printf("Working Adress = %d \n", adress);
 printf("\nList of available commands:\n\n");
 printf("Rand	: Perform Random on working adress\n");
@@ -76,6 +69,8 @@ printf("Sident	: Identyfy and prompt if single\n");
 printf("Bank	: Bank Working Adress\n");
 printf("Rbank	: Perform Rand on Bank\n");
 printf("Cycle	: Perform Ident Cycle of Rand\n");
+printf("DMX 	: Enable DMX on ALL Channels\n");
+printf("Overide	: Set light overide on ALL channels\n");
 }
 
 
@@ -84,23 +79,62 @@ printf("Poulet Rand\n");
 }
 int set(){
 printf("Poulet Set\n");
+bigul1[9] = adress;
+bigul2[9] = adress;
+bigulX[9] = adress;
+bigul6[9] = adress;
+//no write yet
+
+printf("The New working adress is %d \n", bigul1[9]);
+
 }
 int identify(){
 printf("Poulet Identify\n");
+sendident(); //existe pas encore
 }
 int side(){
-printf("Poulet Side\n");
-}
+printf("Poulet Side\n"); // Side Ident
+//sendident();
+printf("Is the light at unique adress?\n");
+kbin();
+if (name == 'n'){
+sendsix(); // existe pas encore, met le working a 600
+}}
+
 int bank(){
 printf("Poulet Bank\n");
+sendsix();// send working adress to 600
 }
 int rbank(){
 printf("Poulet Rbank\n");
+// set working adress to 600
+// perform random
+// remet working a ce quelle etait
 }
 int cycle(){
 printf("Poulet Cycle\n");
+for (i = 0, i<15, i++) {
+	//set working adress to 500
+	setident();//identify
+	side();
+	printf("Input new DMX adress);
+	kbin();
+	bigulX[x] = //name
+	//write  to working new address
+	}
+}
+int dmx(){
+printf("Poulet DMX\n");
+bigul5[9] = 0;
+// no write yet
+}
+int overide(){
+printf("Poulet Overide\n");
+bigul4[9] = 0;
+// no write yet
 }
 
+/////////////////////////////MAIN///////////////////////
 int main()
 {
 
@@ -116,7 +150,7 @@ subMain();  // Options
 
 set();	
 
-kbin();
+
 std::string random = ("Rand");
 std::string Sset = ("Set");
 std::string Iidentify = ("Ident");
@@ -124,7 +158,11 @@ std::string Sside = ("Sident");
 std::string Bbank = ("Bank");
 std::string Rrbank = ("Rbank");
 std::string Ccycle = ("Cycle");
+std::string dDMX("DMX");
+std::string Ooveride = ("Overide");
 // passer a une variable
+
+kbin();
 stringLength = strlen(name);
 for (int i = 0; i < stringLength; i++) {
 command[i] = name[i];
@@ -151,94 +189,26 @@ rbank();
 else if(command == Ccycle){
 cycle();
 }
-
+else if(command == dDMX){
+dmx();
+}
+else if(command == Ooveride){
+overide();
+}
 else printf("Invalid Command\n");
-//if (god == 0){// le return de kbin c'est toujours name
-//printf("\n\nMake your Supervivsor approve these settings: \n\n");
-//}
-// faut rajouter les includes
-//readfile();
 
+    serialib LS;  // Object of the serialib class
+    int Ret;      // Used for return values
 
-//printf("The Program will read from a file and display the content \n");
-//printf("The file will have all the information about the unit \n\n");
-// non ca je lai mis apres la logique.
-
-
-
-//if(god == 0){
-//printf("Enter Supervisor Name:\a");
-//kbin();
-//stringLength = strlen(name);
-//for (int i = 0; i < stringLength; i++){
-//supName[i] = name[i];
-//}
-//printf("stringLength = %d \n", stringLength);
-//printf("sup name = %s \n", name);
-//printf("Enter Supervisor Password:\a");
-// metre la le usr root pass
-//if(god = 0) {
-//kbin();
-//}
-//else printf("fuck");
-//stringLength = strlen(name);
-//for (int i = 0; i < stringLength; i++) {
-//supPass[i] = name[i];
-//} // end of god 0
-//}
-//else printf("Fuck");
-//}
-//}
-
-//if (god = 0){
-//printf("supPass = %s \n", supPass);
-
-
-
-// /old  stuff  New Stuff
-//int input = 66;
-//char input2 = 28;
-//char line [3];
-//printf("Enter Primary(starting) Adress: \n");
-//std::cin.get( line, 3);
-//std::cout << line << "\n";
-//input2 = input;
-//input = atoi (line);
-//printf("the value of input is %d \n" ,input);
-//printf("Scan DUT (Device Under Test) Bar Code to Beiging Test \n");
-	
-//    bzero(buffer,256);
-//    printf("reading barcode:");
-
-//writeCsv();
-
- //   scan_keyascii();
-//printf("\n\n\nThe Test is Executing\n");
-// Now pour Modifier la valeur de ce que je desire configurer
-
-//bigul1[9]={input};
-//bigul2[9]={input};
-//bigul5
-
-//
-//printf(" The value of bigul1 9 is %d \n", bigul1[9]);
-
-// End of New Stuff
-
-
-    serialib LS;                                                            // Object of the serialib class
-    int Ret;                                                                // Used for return values
-//    char Buffer[128];
-//    char Buffer[128];
     char Buffer[256];
     int Buffed[128];
 
     // Open serial port
 
-    Ret=LS.Open(DEVICE_PORT,115200);                                        // Open serial link at 115200 bauds
-    if (Ret!=1) {                                                           // If an error occured...
-        printf ("Error while opening port. Permission problem ?\n");        // ... display a message ...
-        return Ret;                                                         // ... quit the application
+    Ret=LS.Open(DEVICE_PORT,115200); // Open serial link at 115200 bauds
+    if (Ret!=1) {                    // If an error occured...
+        printf ("Error while opening port. Permission problem ?\n"); 
+        return Ret;                  // ... quit the application
     }
     printf ("Serial port opened successfully !\n");
     // Write Lidlum command on the serial port
@@ -247,38 +217,17 @@ else printf("Invalid Command\n");
     Ret=LS.Write (bigul2, 14);
     Ret=LS.Write (bigul3, 14);
     Ret=LS.Write (bigul4, 14);
-    Ret=LS.Write (bigul5, 14);                                          // Send the command on the serial port
-    if (Ret!=1) {                                                           // If the writting operation failed ...
-        printf ("Error while writing data\n");                              // ... display a message ...
-        return Ret;                                                         // ... quit the application.
+    Ret=LS.Write (bigul5, 14);                
+    if (Ret!=1) {                             
+        printf ("Error while writing data\n");
+        return Ret;                           
     }
     printf ("Write operation is successful \n");
-//    printf ("Why Stall \n ca a lair quil faut le backslas n abs \n");
-
-
-
-
-    // Read a string from the serial device
-//    Ret=LS.ReadString(Buffer,'\n',128,5000);  // Read a maximum of 128 characters with a timeout of 5 seconds
-//    Ret=LS.ReadString(Buffer, 0xff,128,5000);   // The final character of the string must be a line feed ('\n')
-//    if (Ret>0) {
-	//Buffed = atoi (Buffer);                                                              // If a string has been read from, print the string
-//	printf ("Miyuki : %d \n",Buffer);
-       // printf ("String read from serial port : %s",Buffer);}
-//}
-//    else
-//        printf ("TimeOut reached. No data received !\n");                   // If not, print a message.
-
-
 
     // Close the connection with the device
     LS.Close();
 
 printf("This is where we mess with the pruss \n");
-
-// Second part of the test, Pruss Stuff for the DMX
-
-
 // Initialize structure used by prussdrv_pruintc_intc
 // PRUSS_INTC_INITDATA is found in the pruss_intc_mapping.h
 tpruss_intc_initdata pruss_intc_initdata = PRUSS_INTC_INITDATA;
