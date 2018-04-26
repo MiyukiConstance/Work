@@ -157,12 +157,24 @@ std::string no = ("n");
 if (name == no){
 bigul1[9] = 600;
 bigul2[9] = 600;
+	printf("bigul19 %d\n", bigul1[9]);
 onbigul1 = 1;
 onbigul2 = 1;
 write();
 onbigul1 = 0;
 onbigul2 = 0;
 }
+	else {printf("Input new DMX adress");
+	kbin();
+	bigul1[7] = atoi(name);
+	bigul2[7] = atoi(name);
+		printf("read bigul 1 = %d \n", bigul1[7]);
+	onbigul1 = 1;
+	onbigul2 = 1;
+	write(); // to working new address
+	onbigul1 = 0;
+	onbigul1 = 0;
+	     }
 }
 
 int sendsix(){
@@ -186,16 +198,7 @@ for (int i = 500; i<516; i++) {
 	adress = i;
 	bigul5[9] = adress; //Bigul5 identify
 	side();
-	printf("Input new DMX adress");
-	kbin();
-	bigul1[7] = atoi(name);
-	bigul2[7] = atoi(name);
-		printf("read bigul 1 = %d \n", bigul1[7]);
-	onbigul1 = 1;
-	onbigul2 = 1;
-	write(); // to working new address
-	onbigul1 = 0;
-	onbigul1 = 0;
+	
 	}
 }
 int dmx(){
