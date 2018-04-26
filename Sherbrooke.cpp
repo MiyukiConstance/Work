@@ -33,15 +33,15 @@ int adress =1;
 int setAdress;
 /////////////////////PAS BON IL Y A DEUX OVERIDE!!!!!!!!!!///////
 /////////// MODIFIER LE RESTE DU PROGRAMME /////////////// DEMAIN
-// Set dev adress
+// Set dev adress ////// Verrified
 char bigul1[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x03, 0x02, 0x01, 0x03, 0xff, 0x4c, 0x55, 0x4d};
-// Set DMX adress
+// Set DMX adress  ///// ?
 char bigul2[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x11, 0x02, 0x01, 0x03, 0xff, 0x4c, 0x55, 0x4d};
-// Set Overide
+// Set DMX Enable /////// ????
 char bigul3[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x10, 0x02, 0x01, 0x01, 0xff, 0x4c, 0x55, 0x4d};
-// Set Light Overide
+// Set Light Overide  //////Verrified
 char bigul4[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x04, 0x02, 0x01, 0x01, 0xff, 0x4c, 0x55, 0x4d};
-// Set DMX Enable
+// Set Identify  ////// Verrified
 char bigul5[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x0e, 0x02, 0x01, 0x01, 0xff, 0x4c, 0x55, 0x4d};
 // Set Random  // pas bon encore
 char bigul6[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x03, 0x02, 0x01, 0x03, 0xff, 0x4c, 0x55, 0x4d};
@@ -72,8 +72,37 @@ printf("Cycle	: Perform Ident Cycle of Rand\n");
 printf("DMX 	: Enable DMX on ALL Channels\n");
 printf("Overide	: Set light overide on ALL channels\n");
 }
+int write(){
+	 serialib LS;  // Object of the serialib class
+    int Ret;      // Used for return values
 
+    char Buffer[256];
+    int Buffed[128];
 
+    // Open serial port
+
+    Ret=LS.Open(DEVICE_PORT,115200); // Open serial link at 115200 bauds
+    if (Ret!=1) {                    // If an error occured...
+        printf ("Error while opening port. Permission problem ?\n"); 
+        return Ret;                  // ... quit the application
+    }
+    printf ("Serial port opened successfully !\n");
+    // Write Lidlum command on the serial port
+
+    Ret=LS.Write (bigul1, 14);
+    Ret=LS.Write (bigul2, 14);
+    Ret=LS.Write (bigul3, 14);
+    Ret=LS.Write (bigul4, 14);
+    Ret=LS.Write (bigul5, 14);                
+    if (Ret!=1) {                             
+        printf ("Error while writing data\n");
+        return Ret;                           
+    }
+    printf ("Write operation is successful \n");
+
+    // Close the connection with the device
+    LS.Close();
+}
 int rand(){
 printf("Poulet Rand\n");
 }
@@ -197,35 +226,7 @@ overide();
 }
 else printf("Invalid Command\n");
 
-    serialib LS;  // Object of the serialib class
-    int Ret;      // Used for return values
-
-    char Buffer[256];
-    int Buffed[128];
-
-    // Open serial port
-
-    Ret=LS.Open(DEVICE_PORT,115200); // Open serial link at 115200 bauds
-    if (Ret!=1) {                    // If an error occured...
-        printf ("Error while opening port. Permission problem ?\n"); 
-        return Ret;                  // ... quit the application
-    }
-    printf ("Serial port opened successfully !\n");
-    // Write Lidlum command on the serial port
-
-    Ret=LS.Write (bigul1, 14);
-    Ret=LS.Write (bigul2, 14);
-    Ret=LS.Write (bigul3, 14);
-    Ret=LS.Write (bigul4, 14);
-    Ret=LS.Write (bigul5, 14);                
-    if (Ret!=1) {                             
-        printf ("Error while writing data\n");
-        return Ret;                           
-    }
-    printf ("Write operation is successful \n");
-
-    // Close the connection with the device
-    LS.Close();
+   
 
 printf("This is where we mess with the pruss \n");
 // Initialize structure used by prussdrv_pruintc_intc
@@ -247,7 +248,7 @@ prussdrv_pru_write_memory(PRUSS0_PRU0_DATARAM, 1, &sample, 4);
 // quand devmem2 ces adresse 0x4a300000
 // ca donne 0x32 qui est 50 dec et 0x4a300004 donne BB
 
-// up to this point it fucking works!!!!!
+
 //but I should realy split the program ?  francois?
 
 
