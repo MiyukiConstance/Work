@@ -61,6 +61,27 @@ int kbin(){ // Keyboard Input
 	__fpurge(stdin);
 	return 1;
 }
+int subMain();{
+printf("\n");
+printf("Set workig adress, 0 = all\n");
+kbin();
+adress = atoi(name);
+//int stringLength = strlen(name);
+//for (int i = 0; i < stringLength; i++) {
+//usrName[i] = name[i];
+//testOut[1] = usrName;  // teporaire log genre ostie de chien sale
+printf("Working Adress = %d \n", adress);
+printf("\nList of available commands:\n\n");
+printf("Rand	: Perform Random on working adress\n");
+printf("Set	: Set the new Working Adress\n");
+printf("Ident	: Identify the lamp at Working Adress\n");
+printf("Sident	: Identyfy and prompt if single\n");
+printf("Bank	: Bank Working Adress\n");
+printf("Rbank	: Perform Rand on Bank\n");
+printf("Cycle	: Perform Ident Cycle of Rand\n");
+}
+
+
 int rand(){
 printf("Poulet Rand\n");
 }
@@ -91,24 +112,8 @@ printf("You must run this program as root. EXITING.\n");
 exit(EXIT_FAILURE);
 }
 
+subMain();  // Options
 
-printf("\n");
-printf("Set workig adress, 0 = all\n");
-kbin();
-adress = atoi(name);
-//int stringLength = strlen(name);
-//for (int i = 0; i < stringLength; i++) {
-//usrName[i] = name[i];
-//testOut[1] = usrName;  // teporaire log genre ostie de chien sale
-printf("Working Adress = %d \n", adress);
-printf("\nList of available commands:\n\n");
-printf("Rand	: Perform Random on working adress\n");
-printf("Set	: Set the new Working Adress\n");
-printf("Ident	: Identify the lamp at Working Adress\n");
-printf("Sident	: Identyfy and prompt if single\n");
-printf("Bank	: Bank Working Adress\n");
-printf("Rbank	: Perform Rand on Bank\n");
-printf("Cycle	: Perform Ident Cycle of Rand\n");
 
 kbin();
 std::string random = ("Rand");
@@ -309,5 +314,4 @@ prussdrv_exit ();
 
     return 0;
 }
-
 
