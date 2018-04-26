@@ -62,10 +62,7 @@ int kbin(){ // Keyboard Input
 	return 1;
 }
 int subMain();{
-printf("\n");
-printf("Set workig adress, 0 = all\n");
-kbin();
-adress = atoi(name);
+
 //int stringLength = strlen(name);
 //for (int i = 0; i < stringLength; i++) {
 //usrName[i] = name[i];
@@ -111,9 +108,13 @@ if(getuid()!=0){
 printf("You must run this program as root. EXITING.\n");
 exit(EXIT_FAILURE);
 }
-
+printf("\n");
+printf("Set workig adress, 0 = all\n");
+kbin();
+adress = atoi(name);
 subMain();  // Options
 
+set();	
 
 kbin();
 std::string random = ("Rand");
