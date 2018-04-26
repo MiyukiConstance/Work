@@ -1,0 +1,3 @@
+#!/bin/sh
+pasm -b toBeDmx.p
+g++ serious.cpp serialib.cpp -o pouish -lpthread -lprussdrv
