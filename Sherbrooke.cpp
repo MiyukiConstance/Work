@@ -194,6 +194,7 @@ printf("Poulet Rbank\n");
 int cycle(){
 printf("Poulet Cycle\n");
 for (int i = 500; i<516; i++) {
+	printf("Now testing Adress %d\n", i);
 	//set working adress to 500
 	adress = i;
 	bigul5[9] = adress; //Bigul5 identify
