@@ -33,8 +33,12 @@
 
 
 int adress = 1;
-int adress1 = 0;
+int adress1 = 1;
 int wAdress = 0; // working adresss
+int aAdress = 1;
+int aAdr = 0;
+int aAdr1 = 1;
+
 int setAdress;
 /////////////////////PAS BON IL Y A DEUX OVERIDE!!!!!!!!!!///////
 /////////// MODIFIER LE RESTE DU PROGRAMME /////////////// DEMAIN
@@ -62,8 +66,8 @@ char name[14];
 char command[14];
 int stringLength;
 
-int sendsix();
-int sendident();
+int bank();
+int assign();
  
 
 int kbin(){ // Keyboard Input
@@ -139,7 +143,11 @@ printf("Poulet Rand\n");
 int set(){
 	if (wAdress >= 255){
 	adress1 = wAdress - 255;
-	adress = 255;
+	adress = 1;
+	}
+	else if (wAdress >= 511){ 
+	adress1 = wAdress  - 512;
+	adress = 2;
 	}
 	else {
 	adress1 = 0;
@@ -148,7 +156,7 @@ int set(){
 //printf("The new working adress is %d \n\n", adress + adress1); 
 }
 
-aSet(){
+int aSet(){
 	if (aAdress <= 255){
 	aAdr1 = aAdress -255;
 	aAdr = 255;
@@ -161,49 +169,49 @@ aSet(){
 
 int identify(){
 //printf("Poulet Identify\n");
-bigul5[4] = adress;
-bigul5[5] = adress1;
+bigul5[3] = adress;
+bigul5[4] = adress1;
 onbigul5 = 1;
 write();
 onbigul5 = 0;
 }
 
 int side(){
-printf("\nIs the light at unique adress?\n");
-kbin();
-std::string no = ("n");
-if (name == no){
-bank();
-
-}
-	else {printf("\nInput new DMX adress\n");
+	printf("\nIs the light at unique adress?\n");
+	kbin();
+	std::string no = ("n");
+		if (name == no){
+		bank();
+		}
+	else {
+	printf("\nInput new DMX adress\n");
 	kbin();
 	aAdress = atoi(name);
 	aSet(); //Splittte la nouvelle adress( celle a ecrire) 
 	assign();	
-     }
+     	}
 }
 
 
 int bank(){ 
-bigul1[4] = adress; // pas bon
-bigul1[5] = adress1;// pas bon il faut garder la working adress
-//wAdress = 600;
-bigul1[8] = 2;
-bigul1[9] = 44; 
-onbigul1 = 1;
-write();
-onbigul1 = 0;
-}
+	bigul1[3] = adress; // pas bon
+	bigul1[4] = adress1;// pas bon il faut garder la working adress
+	//wAdress = 600;
+	bigul1[7] = 2;
+	bigul1[8] = 44; 
+	onbigul1 = 1;
+	write();
+	onbigul1 = 0;
+	}
 
 int assign(){
-bigul1[4] = adress;
-bigul1[5] = adress1;
-bigul1[8] = aAdr;
-bigul1[9] = aAdr1;
-onbigul1 = 1;
-write();
-onbigul1 = 0;
+	bigul1[3] = adress;
+	bigul1[4] = adress1;
+	bigul1[7] = aAdr;
+	bigul1[8] = aAdr1;
+	onbigul1 = 1;	
+	write();
+	onbigul1 = 0;
 }
 
 int rbank(){
