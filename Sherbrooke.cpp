@@ -253,7 +253,7 @@ onbigul3 = 0;
 int overide(){
 onbigul4 = 1;
 write();
-onbigul4 = ;0
+onbigul4 = 0;
 }
 
 /////////////////////////////MAIN///////////////////////
