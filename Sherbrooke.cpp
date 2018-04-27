@@ -134,9 +134,14 @@ int write(){
     // Close the connection with the device
     LS.Close();
 }
-int sendident(){}
+//int sendident(){}
 int rand(){
 printf("Poulet Rand\n");
+bigul6[3] = adress;
+bigul6[4] = adress1;
+onbigul6 = 1;
+write();
+onbigul6 = 0;
 }
 
 
@@ -157,9 +162,13 @@ int set(){
 }
 
 int aSet(){
-	if (aAdress <= 255){
+	if (aAdress >= 255){
 	aAdr1 = aAdress -255;
-	aAdr = 255;
+	aAdr = 1;
+	}
+	else if (aAdress >= 511){
+	aAdr = aAdress - 512;	
+	aAdr1 = 2 ;
 	}
 	else {
 	aAdr1 = 0;	
@@ -177,6 +186,7 @@ onbigul5 = 0;
 }
 
 int side(){
+	identify();
 	printf("\nIs the light at unique adress?\n");
 	kbin();
 	std::string no = ("n");
@@ -194,11 +204,11 @@ int side(){
 
 
 int bank(){ 
-	bigul1[3] = adress; // pas bon
-	bigul1[4] = adress1;// pas bon il faut garder la working adress
+	bigul1[3] = adress; 
+	bigul1[4] = adress1;
 	//wAdress = 600;
-	bigul1[7] = 2;
-	bigul1[8] = 44; 
+	bigul1[8] = 2;
+	bigul1[9] = 44; 
 	onbigul1 = 1;
 	write();
 	onbigul1 = 0;
@@ -207,38 +217,43 @@ int bank(){
 int assign(){
 	bigul1[3] = adress;
 	bigul1[4] = adress1;
-	bigul1[7] = aAdr;
 	bigul1[8] = aAdr1;
+	bigul1[9] = aAdr;
+	bigul2[8] = aAdr1;
+	bigul2[9] = aAdr;
 	onbigul1 = 1;	
+	onbigul2 = 1;
 	write();
 	onbigul1 = 0;
+	onbigul2 = 0;
 }
 
 int rbank(){
 printf("Poulet Rbank\n");
-// set working adress to 600
-// perform random
-// remet working a ce quelle etait
+wAdress = 600;
+set();
+rand();
 }
+
 int cycle(){
 	for (int i = 0; i<16; i++) {
 	printf("Now testing Adress %d\n\n", i);
 	wAdress = i + 500;
 //	bkpAddr = wAdress;
 	set(); // divise l'adresse
-	identify();
+	//identify();
 	side();
 	}
 }
 int dmx(){
-printf("Poulet DMX\n");
-bigul5[9] = 0;
-// no write yet
+onbigul3 = 1;
+write();
+onbigul3 = 0;
 }
 int overide(){
-printf("Poulet Overide\n");
-bigul4[9] = 0;
-// no write yet
+onbigul4 = 1;
+write();
+onbigul4 = ;0
 }
 
 /////////////////////////////MAIN///////////////////////
