@@ -54,7 +54,7 @@ char bigul4[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x04, 0x02, 0x01, 0x01, 0xff,
 // Set Identify  ////// Verrified
 char bigul5[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x0e, 0x02, 0x01, 0x01, 0xff, 0x4c, 0x55, 0x4d};
 // Set Random  // commande 13 Verrified
-char bigul6[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x13, 0x02, 0x01, 0x03, 0xff, 0x4c, 0x55, 0x4d};
+char bigul6[]={0x4c, 0x49, 0x44, 0x00, 0x00, 0x4e, 0x13, 0x00, 0xff, 0x4c, 0x55, 0x4d};
 int onbigul1 = 0;
 int onbigul2 = 0; 
 int onbigul3 = 0;
@@ -137,8 +137,8 @@ int write(){
 //int sendident(){}
 int rand(){
 printf("Poulet Rand\n");
-bigul6[3] = adress;
-bigul6[4] = adress1;
+bigul6[3] = adress1;
+bigul6[4] = adress;
 onbigul6 = 1;
 write();
 onbigul6 = 0;
@@ -146,13 +146,15 @@ onbigul6 = 0;
 
 
 int set(){
-	if (wAdress >= 255){
-	adress1 = wAdress - 255;
-	adress = 1;
+	if (wAdress >> 255){
+	adress = wAdress - 255;
+	adress1 = 1;
+printf("sgegs sergesg %d \n", adress1); 
 	}
-	else if (wAdress >= 511){ 
-	adress1 = wAdress  - 512;
-	adress = 2;
+	else if (wAdress >> 512){ 
+	adress = wAdress  - 512;
+	adress1 = 2;
+printf("ostie caliss %d \n", adress1);
 	}
 	else {
 	adress1 = 0;
@@ -166,7 +168,7 @@ int aSet(){
 	aAdr1 = aAdress -255;
 	aAdr = 1;
 	}
-	else if (aAdress >= 511){
+	else if (aAdress >= 512){
 	aAdr = aAdress - 512;	
 	aAdr1 = 2 ;
 	}
@@ -178,8 +180,8 @@ int aSet(){
 
 int identify(){
 //printf("Poulet Identify\n");
-bigul5[3] = adress;
-bigul5[4] = adress1;
+bigul5[3] = adress1;
+bigul5[4] = adress;
 onbigul5 = 1;
 write();
 onbigul5 = 0;
@@ -239,9 +241,7 @@ int cycle(){
 	for (int i = 0; i<16; i++) {
 	printf("Now testing Adress %d\n\n", i);
 	wAdress = i + 500;
-//	bkpAddr = wAdress;
 	set(); // divise l'adresse
-	//identify();
 	side();
 	}
 }
