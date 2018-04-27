@@ -149,20 +149,14 @@ int set(){
 }
 
 aSet(){
-	// le but c'est de ecrire a l'adress quon etais rendu la nouvekle val
-
-	//bigul1[8] = adress; //Set Device Adress
-	//bigul1[9] = adress1; 
-	//bigul2[8] = adress; //Set DMX Adress
-	//bigul2[9] = adress1;
-	//onbigul1 = 1;
-	//onbigul2 = 1;
-	//write();
-	//onbigul1 = 0;
-	//onbigul2 = 0;
-	// working adress should be fine from side
-	
-
+	if (aAdress <= 255){
+	aAdr1 = aAdress -255;
+	aAdr = 255;
+	}
+	else {
+	aAdr1 = 0;	
+	aAdr = aAdress;
+	} 
 }
 
 int identify(){
@@ -184,43 +178,34 @@ bank();
 }
 	else {printf("\nInput new DMX adress\n");
 	kbin();
-//bkpaddr
-// a ce point le working adress est set par cycle
-	// non   wAdress = atoi(name);
-	// non   set();  //pour diviser la nouvelle input
-	//nouvelle fonction?
-	//peut etre 
-	aSet(); // donc dans aset on a la nouvlle valeur et celle quon est 
-		//rendu
-
-	// remplacer par aSet
-
-	//onbigul1 = 1;
-	//onbigul2 = 1;
-	//write(); // to working new address
-	//onbigul1 = 0;
-	//onbigul1 = 0;
-	     }
+	aAdress = atoi(name);
+	aSet(); //Splittte la nouvelle adress( celle a ecrire) 
+	assign();	
+     }
 }
 
 
-
-int bank(){
-//printf("Poulet Bank\n");
-//sendsix();// send working adress to 600
-// on parle a wA qui est en pricipe 500 ++ ou autre
-// et on veut setter a xxxxxx 
-bigul1[4] = adress;
-bigul1[5] = adress1;
-wAdress = 600;
-set();
-bigul1[8] = adress;
-bigul1[9] = adress1; // peut etre [] pas bon....
+int bank(){ 
+bigul1[4] = adress; // pas bon
+bigul1[5] = adress1;// pas bon il faut garder la working adress
+//wAdress = 600;
+bigul1[8] = 2;
+bigul1[9] = 44; 
 onbigul1 = 1;
 write();
 onbigul1 = 0;
-write();
 }
+
+int assign(){
+bigul1[4] = adress;
+bigul1[5] = adress1;
+bigul1[8] = aAdr;
+bigul1[9] = aAdr1;
+onbigul1 = 1;
+write();
+onbigul1 = 0;
+}
+
 int rbank(){
 printf("Poulet Rbank\n");
 // set working adress to 600
