@@ -32,8 +32,8 @@
 #define         DEVICE_PORT             "/dev/ttyO2"  
 
 
-int adress = 1;
-int adress1 = 1;
+int adress = 0;
+int adress1 = 0;
 unsigned int wAdress = 0; // working adresss
 unsigned int aAdress = 1;
 int aAdr = 1;
@@ -148,26 +148,26 @@ char buffer[2];
 
 int set(){
 //char buffer[2];	
-printf ("wadresss = %d\a", wAdress);
+//printf ("wadresss = %d\a", wAdress);
 	for (int i = 0; i < 2; i++){
 	buffer[i] = ((wAdress >> (8 * i)) & 0xFF);
 	}
 	adress = buffer[0];
 	adress1 = buffer[1];
-	printf("adress1 = %d \n", adress);
-	printf("adress = %d \n", adress1);
+//	printf("adress1 = %d \n", adress);
+//	printf("adress = %d \n", adress1);
 }
 
 int aSet(){
 //char buffer[2];
-printf ("aAdress = %d \n", aAdress);
+//printf ("aAdress = %d \n", aAdress);
 	for (int i = 0; i < 2; i++){
 	buffer[i] = ((aAdress >> (8 * i)) & 0xFF);
 	}
 	aAdr = buffer[0];
 	aAdr1 = buffer[1];
-	printf("aAdr = %d\n", aAdr);
-	printf("aAdr1 = %d\n", aAdr1);
+//	printf("aAdr = %d\n", aAdr);
+//	printf("aAdr1 = %d\n", aAdr1);
 }
 
 
@@ -199,13 +199,15 @@ int side(){
 }
 
 
-/// probleme dans bank rete a identifier ?
+
 int bank(){ 
-	bigul1[3] = adress; 
-	bigul1[4] = adress1;
+//	set();
+	bigul1[3] = adress1; 
+	bigul1[4] = adress;
 	//wAdress = 600;
 	bigul1[8] = 2;
-	bigul1[9] = 44; 
+	bigul1[9] = 88 ;
+ 
 	onbigul1 = 1;
 	write();
 	onbigul1 = 0;
@@ -229,7 +231,17 @@ int rbank(){
 printf("Poulet Rbank\n");
 wAdress = 600;
 set();
+//Fucking patch
+int fuck = adress;
+int fuck1 = adress1;
+adress = fuck1;
+adress1 = fuck;
 rand();
+// perofir rand at dress 600
+// bigul 3 4
+//bigul1[3
+//adress = 2;
+//adress1 = 88;
 }
 
 int cycle(){
@@ -250,22 +262,27 @@ onbigul4 = 1;
 write();
 onbigul4 = 0;
 }
+int mSet(){
+printf("Input New Lamp Adress: \n");
+kbin();
+wAdress = atoi(name);
+set();
+}
 
 /////////////////////////////MAIN///////////////////////
 int main(){
-for (int a=0; a<10; a++)
-
-{
 
 if(getuid()!=0){
 printf("You must run this program as root. EXITING.\n");
 exit(EXIT_FAILURE);
 }
+wAdress = 1;
+printf("\n\n\n \\\\\\\\\\\\\\Wlecome\\\\\\\\\\\\\ \n\n\n");
+for (;;){
+//set();
 printf("\n");
-printf("Set workig adress, 0 = all\n");
-kbin();
-wAdress = atoi(name);
-set();
+printf("Lamp adress is: %d\n", wAdress);;
+
 subMain();  // Options
 
 std::string random = ("Rand");
@@ -277,8 +294,7 @@ std::string Rrbank = ("Rbank");
 std::string Ccycle = ("Cycle");
 std::string dDMX("DMX");
 std::string Ooveride = ("Overide");
-// passer a une variable
-
+printf("\nInput Command :\n");
 kbin();
 stringLength = strlen(name);
 for (int i = 0; i < stringLength; i++) {
@@ -290,7 +306,7 @@ if(command == random){
 rand(); 
 }
 else if(command == Sset){
-set();
+mSet();
 }
 else if(command == Iidentify){
 identify();
