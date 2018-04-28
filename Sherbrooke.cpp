@@ -34,9 +34,9 @@
 
 int adress = 1;
 int adress1 = 1;
-int wAdress = 0; // working adresss
-int aAdress = 1;
-int aAdr = 0;
+unsigned int wAdress = 0; // working adresss
+unsigned int aAdress = 1;
+int aAdr = 1;
 int aAdr1 = 1;
 
 int setAdress;
@@ -136,47 +136,40 @@ int write(){
 }
 //int sendident(){}
 int rand(){
-printf("Poulet Rand\n");
-bigul6[3] = adress1;
-bigul6[4] = adress;
+//printf("Poulet Rand\n");
+bigul6[3] = adress;
+bigul6[4] = adress1;
 onbigul6 = 1;
 write();
 onbigul6 = 0;
 }
 
+char buffer[2];
 
 int set(){
-	if (wAdress >> 255){
-	adress = wAdress - 255;
-	adress1 = 1;
-printf("sgegs sergesg %d \n", adress1); 
+//char buffer[2];	
+printf ("wadresss = %d\a", wAdress);
+	for (int i = 0; i < 2; i++){
+	buffer[i] = ((wAdress >> (8 * i)) & 0xFF);
 	}
-	else if (wAdress >> 512){ 
-	adress = wAdress  - 512;
-	adress1 = 2;
-printf("ostie caliss %d \n", adress1);
-	}
-	else {
-	adress1 = 0;
-	adress = wAdress;
-	}
-//printf("The new working adress is %d \n\n", adress + adress1); 
+	adress = buffer[0];
+	adress1 = buffer[1];
+	printf("adress1 = %d \n", adress);
+	printf("adress = %d \n", adress1);
 }
 
 int aSet(){
-	if (aAdress >= 255){
-	aAdr1 = aAdress -255;
-	aAdr = 1;
+//char buffer[2];
+printf ("aAdress = %d \n", aAdress);
+	for (int i = 0; i < 2; i++){
+	buffer[i] = ((aAdress >> (8 * i)) & 0xFF);
 	}
-	else if (aAdress >= 512){
-	aAdr = aAdress - 512;	
-	aAdr1 = 2 ;
-	}
-	else {
-	aAdr1 = 0;	
-	aAdr = aAdress;
-	} 
+	aAdr = buffer[0];
+	aAdr1 = buffer[1];
+	printf("aAdr = %d\n", aAdr);
+	printf("aAdr1 = %d\n", aAdr1);
 }
+
 
 int identify(){
 //printf("Poulet Identify\n");
@@ -187,6 +180,7 @@ write();
 onbigul5 = 0;
 }
 
+int num;
 int side(){
 	identify();
 	printf("\nIs the light at unique adress?\n");
@@ -205,6 +199,7 @@ int side(){
 }
 
 
+/// probleme dans bank rete a identifier ?
 int bank(){ 
 	bigul1[3] = adress; 
 	bigul1[4] = adress1;
@@ -217,8 +212,8 @@ int bank(){
 	}
 
 int assign(){
-	bigul1[3] = adress;
-	bigul1[4] = adress1;
+	bigul1[3] = adress1;
+	bigul1[4] = adress;
 	bigul1[8] = aAdr1;
 	bigul1[9] = aAdr;
 	bigul2[8] = aAdr1;
@@ -238,11 +233,11 @@ rand();
 }
 
 int cycle(){
-	for (int i = 0; i<16; i++) {
+	for (int i = 500; i <= 515; i++) {
 	printf("Now testing Adress %d\n\n", i);
-	wAdress = i + 500;
+	wAdress = i;
 	set(); // divise l'adresse
-	side();
+	side(); //probleme dans side ?
 	}
 }
 int dmx(){
@@ -257,7 +252,9 @@ onbigul4 = 0;
 }
 
 /////////////////////////////MAIN///////////////////////
-int main()
+int main(){
+for (int a=0; a<10; a++)
+
 {
 
 if(getuid()!=0){
@@ -270,8 +267,6 @@ kbin();
 wAdress = atoi(name);
 set();
 subMain();  // Options
-
-
 
 std::string random = ("Rand");
 std::string Sset = ("Set");
@@ -288,8 +283,9 @@ kbin();
 stringLength = strlen(name);
 for (int i = 0; i < stringLength; i++) {
 command[i] = name[i];
+//command = name;
 }
-
+//i = 0;
 if(command == random){
 rand(); 
 }
@@ -317,27 +313,32 @@ dmx();
 else if(command == Ooveride){
 overide();
 }
-else printf("Invalid Command\n");
+else {printf("Invalid Command\n");}
+
+int stringLenght = strlen(command);
+for (int i = 0; i< stringLenght; i++) {
+command[i] = 0;
+}
 
    
 
-printf("This is where we mess with the pruss \n");
+//printf("This is where we mess with the pruss \n");
 // Initialize structure used by prussdrv_pruintc_intc
 // PRUSS_INTC_INITDATA is found in the pruss_intc_mapping.h
-tpruss_intc_initdata pruss_intc_initdata = PRUSS_INTC_INITDATA;
+//tpruss_intc_initdata pruss_intc_initdata = PRUSS_INTC_INITDATA;
 // Allocate and initialyze Memory
-prussdrv_init ();
-prussdrv_open (PRU_EVTOUT_0);
+//prussdrv_init ();
+//prussdrv_open (PRU_EVTOUT_0);
 // Maps PRU Interrupts
-prussdrv_pruintc_init(&pruss_intc_initdata); 
+//prussdrv_pruintc_init(&pruss_intc_initdata); 
 
 // Maintenant ecrire une valeur dans la memoire du PRUSS
 // Motherfucker
 // safe pour le debut mais modify
-unsigned int percent = 50;
-prussdrv_pru_write_memory(PRUSS0_PRU0_DATARAM, 0, &percent, 4);
-unsigned int sample = 10;
-prussdrv_pru_write_memory(PRUSS0_PRU0_DATARAM, 1, &sample, 4);
+//unsigned int percent = 50;
+//prussdrv_pru_write_memory(PRUSS0_PRU0_DATARAM, 0, &percent, 4);
+//unsigned int sample = 10;
+//prussdrv_pru_write_memory(PRUSS0_PRU0_DATARAM, 1, &sample, 4);
 // quand devmem2 ces adresse 0x4a300000
 // ca donne 0x32 qui est 50 dec et 0x4a300004 donne BB
 
@@ -346,16 +347,17 @@ prussdrv_pru_write_memory(PRUSS0_PRU0_DATARAM, 1, &sample, 4);
 
 
 // Load and Execute the PRU Programm on the PRU
-prussdrv_exec_program (PRU_NUM, "./toBeDmx.bin");
+//prussdrv_exec_program (PRU_NUM, "./toBeDmx.bin");
 // Wwait for the event Completion from PRU, returns PRU_EVTOUT_0 number
-int n = prussdrv_pru_wait_event (PRU_EVTOUT_0);
-printf("PRU program completed, event number %d. \n", n);
+//int n = prussdrv_pru_wait_event (PRU_EVTOUT_0);
+//printf("PRU program completed, event number %d. \n", n);
 // Disable PRU and close memory mappings
 
-prussdrv_pru_disable(PRU_NUM);
-prussdrv_exit ();
+//prussdrv_pru_disable(PRU_NUM);
+//prussdrv_exit ();
 
 
-    return 0;
+//    return 0;
 }
 
+}
