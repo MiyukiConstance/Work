@@ -1,3 +1,6 @@
+/// Suacisse Saucisse Saucsicces, mets les dans ta bouche!!!!
+// Saucisses saucisses Sausisses, ti piges? c'est comme mon Zizi
+
 #include <prussdrv.h>
 #include <pruss_intc_mapping.h>
 #include <stdio.h>
